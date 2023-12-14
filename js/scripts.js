@@ -31,10 +31,26 @@ const bomb = [];
 // ciclo for per creare 16 numeri casuali
 
 for (let i = 0; i < 16; i++) {
-    const randomBomb = generateRandomNumber(1, 16);
+
+    // Genero numeri casuali
+    const randomBomb = generateRandomNumber(1, 100);
     console.log(randomBomb);
 
+    // Controllo se questo numero appena generato è già presente nell'array
+    let foundInArray = bomb.includes(randomBomb);
+
+    while (foundInArray == true) {
+
+        randomBomb = generateRandomNumber(1, 100);
+        console.log (randomBomb);
+
+        foundInArray =bomb.includes(randomBomb);
+        
+    }
+
     bomb.push (randomBomb);
+
+    console.log(bomb);
     
 }
 
