@@ -18,7 +18,6 @@
 // Proviamo sempre prima con dei console.log() per capire se stiamo ricevendo i dati giusti.
 // Le validazioni e i controlli possiamo farli anche in un secondo momento.
 
-let start = false;
 
 const buttonInput = document.querySelector('button');
 
@@ -30,12 +29,17 @@ console.log('diffSelect', diffSelect, typeof diffSelect);
 
 
 
+
 buttonInput.addEventListener('click', function(){
 
+    let start = true;
 
     quadratone.innerHTML = '';
 
     let bomb = [];
+
+    let point = 0;
+
 
 
     // ciclo for per creare 16 numeri casuali    
@@ -53,13 +57,15 @@ buttonInput.addEventListener('click', function(){
             randomBomb = generateRandomNumber(1, 100);
             console.log (randomBomb);
     
-            foundInArray =bomb.includes(randomBomb);
+            foundInArray = bomb.includes(randomBomb);
             
         }
     
         bomb.push (randomBomb);
     }
+
     console.log(bomb);
+
     const cellNumber = parseInt(diffSelect.value);
     for (let i = 1; i <= cellNumber; i++){
 
@@ -76,20 +82,26 @@ buttonInput.addEventListener('click', function(){
         // APPENDO LA CLASSE SQUARE NEL QUADRATONE CONTAINER 
         quadratone.append(square);
 
-
+        // evento click del quadrato
         square.addEventListener('click', function(){
 
-            this.classList.toggle ('active');
+            if ( start == false){
+                return
+            }
+            
+            this.classList.add ('active');
+            // verrà incrementato di un unità ogni volta cliccato sqaure notbomb
+            point += 1; 
             console.log (i);
             
+
             for(let j = 0; j < bomb.length; j++){
                 if(i == bomb[j]){
                     square.classList.add ('squarebomb');
                     console.log( 'hai preso una bomba');
-                    
+                    start = false;
+                    alert ('Il tuo punteggio è di' + point)
                 }
-
-
             }
 
 
