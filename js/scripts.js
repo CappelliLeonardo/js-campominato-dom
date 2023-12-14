@@ -18,6 +18,8 @@
 // Proviamo sempre prima con dei console.log() per capire se stiamo ricevendo i dati giusti.
 // Le validazioni e i controlli possiamo farli anche in un secondo momento.
 
+let start = false;
+
 const buttonInput = document.querySelector('button');
 
 const quadratone = document.querySelector ('.quadratone');
@@ -25,34 +27,7 @@ const quadratone = document.querySelector ('.quadratone');
 const diffSelect = document.getElementById('difficulty');
 console.log('diffSelect', diffSelect, typeof diffSelect);
 
-const bomb = [];
 
-
-// ciclo for per creare 16 numeri casuali
-
-for (let i = 0; i < 16; i++) {
-
-    // Genero numeri casuali
-    const randomBomb = generateRandomNumber(1, 100);
-    console.log(randomBomb);
-
-    // Controllo se questo numero appena generato è già presente nell'array
-    let foundInArray = bomb.includes(randomBomb);
-
-    while (foundInArray == true) {
-
-        randomBomb = generateRandomNumber(1, 100);
-        console.log (randomBomb);
-
-        foundInArray =bomb.includes(randomBomb);
-        
-    }
-
-    bomb.push (randomBomb);
-
-    console.log(bomb);
-    
-}
 
 
 buttonInput.addEventListener('click', function(){
@@ -60,8 +35,31 @@ buttonInput.addEventListener('click', function(){
 
     quadratone.innerHTML = '';
 
+    let bomb = [];
 
+
+    // ciclo for per creare 16 numeri casuali    
+    for (let i = 1; i <= 16; i++) {
+
+        // Genero numeri casuali
+        let randomBomb = generateRandomNumber(1, 100);
+        // console.log(randomBomb);
     
+        // Controllo se questo numero appena generato è già presente nell'array
+        let foundInArray = bomb.includes(randomBomb);
+    
+        while (foundInArray == true) {
+    
+            randomBomb = generateRandomNumber(1, 100);
+            console.log (randomBomb);
+    
+            foundInArray =bomb.includes(randomBomb);
+            
+        }
+    
+        bomb.push (randomBomb);
+    }
+    console.log(bomb);
     const cellNumber = parseInt(diffSelect.value);
     for (let i = 1; i <= cellNumber; i++){
 
@@ -78,20 +76,36 @@ buttonInput.addEventListener('click', function(){
         // APPENDO LA CLASSE SQUARE NEL QUADRATONE CONTAINER 
         quadratone.append(square);
 
+
         square.addEventListener('click', function(){
 
             this.classList.toggle ('active');
-            console.log (this.innerHTML);
+            console.log (i);
+            
+            for(let j = 0; j < bomb.length; j++){
+                if(i == bomb[j]){
+                    square.classList.add ('squarebomb');
+                    console.log( 'hai preso una bomba');
+                    
+                }
+
+
+            }
+
 
         });
     }
-}
-);
+
+
+
+});
+
+
 
 // FUNZIONE 
 
 function generateRandomNumber (min, max) {
-    const randNUm = Math.floor (Math.random () * (max - min + 1)) + min;
+    const randNUm = Math.floor (Math.random () * (max - min + 1 )) + min;
 
     return randNUm;
 }

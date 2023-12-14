@@ -25,3 +25,8 @@
     border: 2px solid lightcoral;
     background-color: green;
 }
+
+.squarebomb{
+    background: red;
+    border: 2px dashed green;
+}
